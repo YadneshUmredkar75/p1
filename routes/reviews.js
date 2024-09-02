@@ -21,8 +21,9 @@ const {isLogin,isOwner}=require("../middleware.js");
   
 //     res.redirect(`/listing/${listlist._id}`);
 //   }));
-router.post("/", wrapAsync, isLogin, async (req, res) => {
-  const listlist = await Listing.findById(req.params.id).populate("reviews");
+router.post("/", isLogin,wrapAsync( async (req, res) => {
+  const listlist = await Listing.findById(req.params.id)
+
   let newReview = new Review(req.body.review);
   newReview.author = req.user._id; // Assign the author to the review
   listlist.reviews.push(newReview);
@@ -33,7 +34,7 @@ console.log("body code",req.body.review);
   console.log("Review sent");
 
   res.redirect(`/listing/${listlist._id}`);
-});
+}));
 
 //   review rout delete
 // app.delete("lsitings/:id/review/:reviewId",wrapAsync(async(req ,res ,next)=>{
