@@ -50,7 +50,7 @@ const error=schema.validate(req.body);
 // });
 router.get("/:id",isLogin,async(req,res)=>{
     const {id}=req.params;
-    const listlist=await Listing.findById(id).populate("reviews").populate("owner");
+    const listlist=await Listing.findById(id).populate({path:"reviews",populate:{path:"author"}}).populate("owner");
     console.log(listlist)
     res.render("show.ejs",{listlist});
 });

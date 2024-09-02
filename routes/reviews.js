@@ -5,7 +5,7 @@ const {reviewSchema} = require("../schema.js");
 const Review = require("../models/review.js");
 const wrapAsync = require("../utils/async.js");
 const ExpressError = require("../utils/ExpressError.js");
-const {isLogin,isOwner}=require("../middleware.js");
+const {isLogin,isAuthor}=require("../middleware.js");
 
 // router.post("/", wrapAsync,isLogin,(async (req, res) => {
 //     const listlist = await Listing.findById(req.params.id);  
@@ -44,7 +44,7 @@ console.log("body code",req.body.review);
 //     res.redirect(`listings${id}`);
 // }))
 //   review rout delete
-router.delete("/:reviewId", wrapAsync(async(req, res) => {
+router.delete("/:reviewId", wrapAsync,isLogin,isAuthor,(async(req, res) => {
     let { id, reviewId } = req.params;
     await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
     let a = await Review.findByIdAndDelete(reviewId);
