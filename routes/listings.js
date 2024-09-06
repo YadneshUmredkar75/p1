@@ -7,23 +7,16 @@ const {listall,reviewSchema} = require("../schema.js");
 const mongoose = require("mongoose");
 const {isLogin,isOwner}=require("../middleware.js");
 
-// router.get("/",(req,res)=>
-//     {res.send("server was working");});
+
+
+const listindex = require("../controllers/listing.js");
+
 
 //index form
-router.get("/", isLogin ,async(req,res)=>{
-   const allList=await Listing.find({});
+router.get("/", isLogin, listindex.index);
 
-   res.render("index.ejs",{allList} );
-
-    
-});
 //create new list
-router.get("/new",isLogin,(req,res)=>{
-    
-
-    res.render("create.ejs");
-});
+router.get("/new",isLogin,listindex.create);
 
 // validlate error
 let validationerror=(req,res,next)=>{
@@ -38,72 +31,24 @@ const error=schema.validate(req.body);
     }
 
 //show route
-// app.get("/listing/:id",async(req,res)=>{
-//     const {id}=req.params;
-//     const listlist=await Listing.findById(id).populate("reviews");
-//     res.render("show.ejs",{listlist});
-// });
-// app.get("/listing/:id",async(req,res)=>{
-//     const {id}=req.params;
-//     const listlist=await Listing.findById(id).populate("reviews");
-//     res.render("show.ejs",{listlist});
-// });
-router.get("/:id",isLogin,async(req,res)=>{
-    const {id}=req.params;
-    const listlist=await Listing.findById(id).populate({path:"reviews",populate:{path:"author"}}).populate("owner");
-    console.log(listlist)
-    res.render("show.ejs",{listlist});
-});
-router.post("/",wrapAsync(async(req,res,next)=>{
-        // const result=schema.validate(req.body);
-        // console.log(result);
-        // if(result.error){
-        //     throw new ExpressError(400,result.error)
-        // }
-        
-            const newListing = new Listing(req.body.listing);
-            newListing.owner=req.user._id;
-            await newListing.save();
-            req.flash("success","NEW Listing IS ADDEDING")
-            res.redirect("/listing");
-       
-    
-   
-  
-    
-}));
+
+router.get("/:id",isLogin,listindex.show);
+router.post("/",wrapAsync(listindex.postshow));
 
 
 
 
 //edit listing
-router.get("/:id/edit",isLogin,async(req,res)=>{
-    const {id}=req.params;
-    const listlist=await Listing.findById(id);
-    res.render("edit.ejs",{listlist});
-});
+router.get("/:id/edit",isLogin,listindex.edit);
 
 
 
 // Update listings
-router.put("/:id",isLogin,isOwner,async (req, res) => {
-    let {id} = req.params;
-    await Listing.findByIdAndUpdate(id,{...req.body.listing});
-    // req.flash("error","LISTING NOT FOUND ");
-
-    res.redirect(`/listing/${id}`);
-  });
+router.put("/:id",isLogin,isOwner,listindex.update);
 
 
 
 //Delete
-router.delete("/:id",isLogin,async(req,res)=>{
-    const {id}=req.params;
-    const deletelist= await Listing.findByIdAndDelete(id);
-    console.log(deletelist);
-    res.redirect("/listing");
-   
-
-});
+router.delete("/:id",isLogin,listindex.delete);
 
 module.exports=router;

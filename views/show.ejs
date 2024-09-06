@@ -1,4 +1,4 @@
-```<% layout('pages/boilerplate') %>
+<% layout('pages/boilerplate') %>
 <body>
     <div class="row mt-5">
         <div class="col-8">
@@ -55,28 +55,28 @@
        
    </div>
    <hr>
-   
-  
-  
-    
-  
-  <h3>All Reviews</h3>
-  
-</div>  
-<div class="revicard row " >
-    <% for(review of listlist.reviews) { %>
-    <div class="revicard col-5 ms-3 mb-3 ">
-        <h5 class="card-title">@<%= review.author.username %></h5>
-      <p class="card-text"><%= review.comment %></p>
-      <p class="card-text"><%= review.reatings %></p>
-    
-      <form action="/listing/<%= listlist._id %>/reviews/<%= review._id %>?_method=DELETE" method="post" class="mt-2">
-        <button class="btn btn-sm btn-dark">Delete</button>
-    </form>
-    
+<% if(listlist.reviews.length> 0) { %>
+    <div class="row">
+        <p class="text-center"><b>All Reviews</b></p>
+        <% for(review of listlist.reviews) { %>
+            <div class="card col-lg-5 col-md-6 col-sm-12 mx-auto mb-3 p-3 shadow">
+                <div class="card-body">
+                    <h5 class="card-title">@<%= review.author.username %>
+                    </h5>
+                    <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
+                    <p class="card-text">
+                        <%= review.comment %>
+                    </p>
+                    <% if(currUser && review.author._id.equals(currUser._id)) { %>
+                        <form class="mb-3" method="POST"
+                            action="/listing/<%= listlist._id %>/reviews/<%= review._id %>?_method=DELETE">
+                            <button class="btn btn-sm btn-dark">Delete</button>
+                        </form>
+                        <% } %>
+                </div>
+            </div>
+            <% } %>
     </div>
     <% } %>
-  </div> 
 </div>
-</body>```
-
+</body>
