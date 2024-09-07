@@ -6,7 +6,8 @@ const ExpressError = require("../utils/ExpressError.js");
 const {listall,reviewSchema} = require("../schema.js");
 const mongoose = require("mongoose");
 const {isLogin,isOwner}=require("../middleware.js");
-
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' });
 
 
 const listindex = require("../controllers/listing.js");
@@ -30,10 +31,13 @@ const error=schema.validate(req.body);
         }
     }
 
+    // router.post("/",wrapAsync(listindex.postshow));
+    router.post("/",upload.single('Listing[image]'),(req,res)=>{
+      res.send(req.body);
+      })
 //show route
 
 router.get("/:id",isLogin,listindex.show);
-router.post("/",wrapAsync(listindex.postshow));
 
 
 
