@@ -32,7 +32,7 @@ const error=schema.validate(req.body);
     }
 
     // router.post("/",wrapAsync(listindex.postshow));
-    router.post("/",upload.single('Listing[image]'),(req,res)=>{
+    router.post("/",upload.single('listing[image]'),(req,res)=>{
       res.send(req.body);
       })
 //show route
