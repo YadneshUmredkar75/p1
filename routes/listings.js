@@ -35,7 +35,7 @@ const error=schema.validate(req.body);
 
     // router.post("/",wrapAsync(listindex.postshow));
     router.post("/",upload.single('Listing[image]'),(req,res)=>{
-      res.send(req.file);
+      res.send(req.body);
       })
 //show route
 
