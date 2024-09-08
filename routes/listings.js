@@ -7,7 +7,9 @@ const {listall,reviewSchema} = require("../schema.js");
 const mongoose = require("mongoose");
 const {isLogin,isOwner}=require("../middleware.js");
 const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' });
+const {cloudinary,storage}=require("../cloudcofig.js")
+const upload = multer({ storage });
+
 
 
 const listindex = require("../controllers/listing.js");
@@ -33,7 +35,7 @@ const error=schema.validate(req.body);
 
     // router.post("/",wrapAsync(listindex.postshow));
     router.post("/",upload.single('Listing[image]'),(req,res)=>{
-      res.send(req.body);
+      res.send(req.file);
       })
 //show route
 
