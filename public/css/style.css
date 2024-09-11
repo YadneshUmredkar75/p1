@@ -96,3 +96,8 @@ text-decoration: underline;
   margin-bottom: 2rem;
  
 }
+/* map stile */
+#map {
+  height: 400px;
+  width: 100%;
+}

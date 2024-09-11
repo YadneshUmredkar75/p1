@@ -36,7 +36,18 @@ const listall = new mongoose.Schema({
     owner:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"
-    }
+    },
+    gemoetry:  {
+        type: {
+          type: String, // Don't do `{ location: { type: String } }`
+          enum: ['Point'], // 'location.type' must be 'Point'
+          required: true
+        },
+        coordinates: {
+          type: [Number],
+          required: true
+        }
+      }
 });
 listall.post("findOneAndDelete",async(listlist)=>{
     if(listlist){
