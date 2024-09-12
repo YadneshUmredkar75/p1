@@ -44,7 +44,7 @@ async function main() {
 const store = mongoStore.create({
     mongoUrl: Atlas_URL,
     crypto: {
-        secret: 'kasdbkwbdhb'
+        secret: process.env.SECRET,
     },
     touchAfter: 24 * 3600 // updates stored after 24hrs, if no changes
 })
@@ -56,7 +56,7 @@ store.on("error", (err) => {
 
 const sessionop = {
     store,
-    secret: 'keyboardcat',
+    secret:  process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
