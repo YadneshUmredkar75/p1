@@ -1,7 +1,7 @@
 <% layout('pages/boilerplate') %>
 <body>
     <h3>Edit Listing</h3>
-    <form method="post" action="/listing/<%= listlist._id%>?_method=put" novalidate class="needs-validation">
+    <form method="post" action="/listing/<%= listlist._id%>?_method=put" novalidate class="needs-validation" enctype="multipart/form-data">
       <div class="row">
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
@@ -17,10 +17,15 @@
           Please enter short discription.
          </div>
         </div>
-        <div class="mb-3">
-          <label for="image" class="form-label">Image</label>
-          <input type="text" name="listing[image.url]" class="form-control"   value="<%= listlist.image.url %> ">
-       </div>
+        <div class="">
+          Original Image <br>
+          <img src="<%= orListing %>" alt="Listing Image" class="img-fluid" style="max-width: 500px; height: 250px;">
+      </div>
+      
+       <div>
+        <label for="image" class="form-label">Uplode Listing image</label>
+        <input type="file" name="listing[image]"   class="form-control form-label">
+     </div>
        <div class="row">
        <div class="mb-3 col-md-4">
         <label for="price" class="form-label">Price</label>

@@ -20,6 +20,9 @@ module.exports.sendreview=async (req, res) => {
     await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
     let a = await Review.findByIdAndDelete(reviewId);
     console.log(a);
-    // res.send("working")
+    // res.send("working")/;
     res.redirect(`/listing/${id}`);
-  }
+}
+
+
+ 

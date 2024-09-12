@@ -14,5 +14,5 @@ router.post("/", isLogin,wrapAsync(review.sendreview));
 
 
 //   review rout delete
-router.delete("/:reviewId",isLogin,isAuthor, wrapAsync,(review.deletereview));
+router.delete("/:reviewId",isLogin,isAuthor, wrapAsync(review.deletereview));
 module.exports=router;
