@@ -15,7 +15,7 @@ const session = require("express-session");
 const mongoStore = require('connect-mongo');
 
 const flash = require("connect-flash");
-require('dotenv').config();
+
 const mbxClient = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapboxClient = mbxClient({ accessToken: process.env.MAP_TOKEN });
 
@@ -38,7 +38,7 @@ app.use(methodOverride("_method"));
 app.engine('ejs', ejsMate)
 app.use(express.static(path.join(__dirname, "/public")))
 
-const Atlas_URL =process.env.API_CLOUD;
+const Atlas_URL =process.env.API_CLOUD_MONGODB;
 
 main().then(() => console.log("Connected to DB"))
     .catch(err => console.log(err));
