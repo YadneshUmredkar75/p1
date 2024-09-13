@@ -16,8 +16,10 @@ const mongoStore = require('connect-mongo');
 
 const flash = require("connect-flash");
 require('dotenv').config();
+const mbxClient = require('@mapbox/mapbox-sdk/services/geocoding');
+const mapboxClient = mbxClient({ accessToken: process.env.MAP_TOKEN });
 
-const mapboxClient = new MapboxClient({ accessToken: process.env.MAP_TOKEN });
+
 
 const passport = require("passport");
 const LocalStrategy = require("passport-local"); // Use passport-local
