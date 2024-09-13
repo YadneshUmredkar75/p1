@@ -15,6 +15,10 @@ const session = require("express-session");
 const mongoStore = require('connect-mongo');
 
 const flash = require("connect-flash");
+require('dotenv').config();
+
+const mapboxClient = new MapboxClient({ accessToken: process.env.MAP_TOKEN });
+
 const passport = require("passport");
 const LocalStrategy = require("passport-local"); // Use passport-local
 const User = require("./models/user.js"); // Your User model
